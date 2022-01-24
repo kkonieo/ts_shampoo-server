@@ -47,11 +47,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib",
     "rest_framework",
-    "apps.board",
+    "apps.portfolio",
+    "apps.mypage",
     "apps.user",
-    
     "rest_framework.authtoken",
-    "rest_auth"
 ]
 
 REST_FRAMEWORK = {
@@ -106,9 +105,7 @@ DATABASES = {
         "HOST": os.environ.get("DB_HOST"),
         "PORT": os.environ.get("DB_PORT"),
     },
-    "OPTIONS": {
-        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-    }
+    "OPTIONS": {"init_command": "SET sql_mode='STRICT_TRANS_TABLES'"},
 }
 
 # DATABASES = {
