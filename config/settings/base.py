@@ -46,9 +46,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib",
-    "apps.user",
-    "apps.comment",
     "rest_framework",
+    "apps.board",
+    "apps.user",
+    
+    "rest_framework.authtoken",
+    "rest_auth"
 ]
 
 REST_FRAMEWORK = {
@@ -102,6 +105,9 @@ DATABASES = {
         "PASSWORD": os.environ.get("DB_PASSWORD"),
         "HOST": os.environ.get("DB_HOST"),
         "PORT": os.environ.get("DB_PORT"),
+    },
+    "OPTIONS": {
+        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
     }
 }
 
@@ -135,9 +141,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ko-kr"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Seoul"
 
 USE_I18N = True
 
