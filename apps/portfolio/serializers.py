@@ -6,12 +6,15 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = [
-            'id',
-            'author_email',
-            'title',
-            'content',
-            'start',
-            'end'
+            "id",
+            "author_email",
+            "title",
+            "startDate",
+            "endDate",
+            "techStack",
+            "explain",
+            "imgSrc",
+            "gifSrc",
         ]
     
     author_email = serializers.SerializerMethodField('get_authors_email')
@@ -23,12 +26,15 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = [
-            'id',
-            'author_email',
-            'title',
-            'content',
-            'start',
-            'end'
+            "id",
+            "author_email",
+            "title",
+            "startDate",
+            "endDate",
+            "techStack",
+            "explain",
+            "imgSrc",
+            "gifSrc",
         ]
     
     author_email = serializers.SerializerMethodField('get_authors_email')

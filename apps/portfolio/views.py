@@ -9,11 +9,13 @@ from .permissions import IsOwnerOrReadOnly
 # Create your views here.
 
 class ProjectAPI(generics.ListCreateAPIView):
-    queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     # authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsAuthenticatedOrReadOnly]
     
+    def get_queryset(self):
+        return Project.objects.filter(author=self.kwargs['author'])
+        
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
     
@@ -21,4 +23,4 @@ class ProjectDetailAPI(generics.RetrieveUpdateDestroyAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectDetailSerializer
     # authentication_classes = [TokenAuthentication]
-    permission_classes = [IsOwnerOrReadOnly]
+    # permission_classes = [IsOwnerOrReadOnly]
