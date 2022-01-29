@@ -47,9 +47,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib",
     "rest_framework",
-    "apps.portfolio",
-    "apps.mypage",
+
+    "apps.core",
+    "apps.board",
     "apps.user",
+    "apps.mypage",
+    "apps.portfolio",
+
     "rest_framework.authtoken",
 ]
 
@@ -104,8 +108,11 @@ DATABASES = {
         "PASSWORD": os.environ.get("DB_PASSWORD"),
         "HOST": os.environ.get("DB_HOST"),
         "PORT": os.environ.get("DB_PORT"),
+
+        "OPTIONS": {
+            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     },
-    "OPTIONS": {"init_command": "SET sql_mode='STRICT_TRANS_TABLES'"},
 }
 
 # DATABASES = {
@@ -156,3 +163,4 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+AUTH_USER_MODEL = "user.User"
