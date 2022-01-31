@@ -43,7 +43,18 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """
     사용자 정의모델
+    AUTH_PROVIDERS = 소셜 구분
+    name : 이름
+
     """
+
+    AUTH_PROVIDERS = {
+        "naver": "naver",
+        "google": "google",
+        "github": "github",
+        "email": "email",
+    }
+    # 소셜 구분
 
     name = models.CharField(verbose_name="유저 이름", max_length=10, db_index=True)
     email = models.EmailField(
@@ -54,7 +65,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(verbose_name="기본 권한", default=True)
     is_staff = models.BooleanField(verbose_name="슈퍼 유저", default=False)
     is_verified = models.BooleanField(verbose_name="email 인증자", default=False)
-
+    auth_provider = auth_provider = models.CharField(
+        max_length=255,
+        blank=False,
+        null=False,
+        default=AUTH_PROVIDERS.get("email"),
+    )
     objects = UserManager()
 
     USERNAME_FIELD = "email"
