@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import datetime
 import os
 from pathlib import Path
 
@@ -46,11 +47,17 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib",
+    # rest
     "rest_framework",
+    # apps
     "apps.portfolio",
     "apps.mypage",
     "apps.user",
     "rest_framework.authtoken",
+    # swagger
+    "drf_yasg",
+    # cors
+    "corsheaders",
 ]
 
 REST_FRAMEWORK = {
@@ -59,6 +66,19 @@ REST_FRAMEWORK = {
     ]
 }
 # -----------------------------------------------------
+
+# SWAGGER
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+        }
+    }
+}
+
+# -------------------------------------------------------
 
 
 MIDDLEWARE = [
@@ -108,13 +128,9 @@ DATABASES = {
     "OPTIONS": {"init_command": "SET sql_mode='STRICT_TRANS_TABLES'"},
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+AUTH_USER_MODEL = "apps.user.User"
 
+# -------------------------------------------------------------------
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -156,3 +172,13 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+# Simple JWT
+SIMPLE_JWT = {
+    # 토큰의 life cycle
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=10),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=7),
+}
+# -----------------------------------------------
+
+# CORS
+CORS_ORIGIN_ALLOW_ALL = True
