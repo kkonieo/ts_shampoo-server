@@ -1,20 +1,21 @@
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin,)
 from django.db import models
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 # user를 생성할 때 사용하는 helper class
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, password=None):
+    def create_user(self, name, email, password=None):
 
         if email is None:
             raise TypeError("Users should have a Email")
 
-        if username is None:
+        if name is None:
             raise TypeError("Users should have a username")
 
         user = self.model(
-            username=username,
+            name=name,
             email=self.normalize_email(email),
         )
         user.set_password(password)
@@ -22,12 +23,12 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, username, email, password=None):
+    def create_superuser(self, name, email, password=None):
         if password is None:
             raise TypeError("Password should not be none")
 
         user = self.create_user(
-            username,
+            name,
             email,
             password,
         )
@@ -43,7 +44,18 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """
     사용자 정의모델
+    AUTH_PROVIDERS = 소셜 구분
+    name : 이름
+
     """
+
+    AUTH_PROVIDERS = {
+        "naver": "naver",
+        "google": "google",
+        "github": "github",
+        "email": "email",
+    }
+    # 소셜 구분
 
     name = models.CharField(verbose_name="유저 이름", max_length=10, db_index=True)
     email = models.EmailField(
@@ -54,7 +66,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(verbose_name="기본 권한", default=True)
     is_staff = models.BooleanField(verbose_name="슈퍼 유저", default=False)
     is_verified = models.BooleanField(verbose_name="email 인증자", default=False)
-
+    auth_provider = auth_provider = models.CharField(
+        max_length=255,
+        blank=False,
+        null=False,
+        default=AUTH_PROVIDERS.get("email"),
+    )
     objects = UserManager()
 
     USERNAME_FIELD = "email"
@@ -62,3 +79,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+    # 로그인한 사용자에게 refresh 토큰을 생성해서 부여한다.
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        access = refresh.access_token
+        return {
+            "refresh": str(refresh),
+            "access": str(access),
+            "expired": str(access['exp'])
+        }
