@@ -1,20 +1,21 @@
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin,)
 from django.db import models
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 # user를 생성할 때 사용하는 helper class
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, password=None):
+    def create_user(self, name, email, password=None):
 
         if email is None:
             raise TypeError("Users should have a Email")
 
-        if username is None:
+        if name is None:
             raise TypeError("Users should have a username")
 
         user = self.model(
-            username=username,
+            name=name,
             email=self.normalize_email(email),
         )
         user.set_password(password)
@@ -22,12 +23,12 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, username, email, password=None):
+    def create_superuser(self, name, email, password=None):
         if password is None:
             raise TypeError("Password should not be none")
 
         user = self.create_user(
-            username,
+            name,
             email,
             password,
         )
@@ -78,3 +79,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+    # 로그인한 사용자에게 refresh 토큰을 생성해서 부여한다.
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return {
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
+        }
