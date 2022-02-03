@@ -83,7 +83,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     # 로그인한 사용자에게 refresh 토큰을 생성해서 부여한다.
     def tokens(self):
         refresh = RefreshToken.for_user(self)
+        access = refresh.access_token
         return {
             "refresh": str(refresh),
-            "access": str(refresh.access_token),
+            "access": str(access),
+            "expired": str(access['exp'])
         }
