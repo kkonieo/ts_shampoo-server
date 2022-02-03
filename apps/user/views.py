@@ -1,6 +1,7 @@
 from rest_framework import permissions, status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenRefreshView
 
 from .serializers import (GoogleSocialAuthSerializer, LogoutSerializer,
                           UserUpdateSerializer,)
@@ -51,3 +52,13 @@ class UserAPIView(GenericAPIView):
             },
             status=status.HTTP_200_OK,
         )
+
+
+class UserTokenRefreshView(TokenRefreshView):
+
+    def post(self, request, *args, **kwargs):
+        """
+        토큰 갱신
+        refresh 토큰을 전송하고 새로운 access 토큰값을 발급받습니다.
+        """
+        return super().post(request, *args, **kwargs)
