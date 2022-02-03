@@ -178,8 +178,8 @@ REST_USE_JWT = True
 
 SIMPLE_JWT = {
     # 토큰의 life cycle
-    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=10),
-    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=7),
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1),
 }
 
 
