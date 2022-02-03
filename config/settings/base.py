@@ -49,11 +49,12 @@ INSTALLED_APPS = [
     "django.contrib",
     # rest
     "rest_framework",
+    "rest_framework_simplejwt.token_blacklist",
+    "rest_framework.authtoken",
     # apps
     "apps.portfolio",
     "apps.mypage",
     "apps.user",
-    "rest_framework.authtoken",
     # swagger
     "drf_yasg",
     # cors
@@ -61,9 +62,9 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.AllowAny",
-    ]
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
 }
 # -----------------------------------------------------
 
@@ -128,7 +129,7 @@ DATABASES = {
     "OPTIONS": {"init_command": "SET sql_mode='STRICT_TRANS_TABLES'"},
 }
 
-AUTH_USER_MODEL = "apps.user.User"
+AUTH_USER_MODEL = "user.User"
 
 # -------------------------------------------------------------------
 
@@ -173,11 +174,15 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Simple JWT
+REST_USE_JWT = True
+
 SIMPLE_JWT = {
     # 토큰의 life cycle
     "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=10),
     "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=7),
 }
+
+
 # -----------------------------------------------
 
 # CORS
