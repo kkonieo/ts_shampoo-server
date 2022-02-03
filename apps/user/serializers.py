@@ -1,8 +1,5 @@
 import os
 
-from django.contrib import auth
-from django.utils.encoding import force_str
-from django.utils.http import urlsafe_base64_decode
 from rest_framework import serializers
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
@@ -42,3 +39,67 @@ class GoogleSocialAuthSerializer(serializers.Serializer):
         )
 
 
+class LogoutSerializer(serializers.Serializer):
+    refresh = serializers.CharField()
+
+    default_error_message = {
+        "bad_token": {"Token is expired or Invalid"},
+    }
+
+    def validate(self, attrs):
+        self.token = attrs["refresh"]
+
+        return attrs
+
+    def save(self, **kwargs):
+        try:
+            RefreshToken(self.token).blacklist()
+            # 토큰을 블랙리스트에 추가.
+        except TokenError:
+            self.fail("bad token")
+
+
+class UserUpdateSerializer(serializers.Serializer):
+    """
+    user 정보 변경
+    """
+
+    # 새로 설정될 token
+
+    job = serializers.CharField(max_length=100)
+    name = serializers.CharField(max_length=10)
+    email = serializers.EmailField(max_length=255)
+
+    # uidb64 = serializers.CharField(
+    #     min_length=1,
+    #     write_only=True,
+    # )
+
+    class Meta:
+        fields = ["job", "name", "email"]
+
+    def validate(self, attrs):
+        try:
+            job = attrs.get("job")
+            name = attrs.get("name")
+            # 새로운 패스워드
+            # uidb64 = attrs.get("uidb64")
+            # 사용자 index 인코딩 정보 => 이메일로 인증 하는 것이 아닌 uidb로 인증.
+
+            email = attrs.get("email")
+
+            # id = force_str(urlsafe_base64_decode(uidb64))
+            # 사용자 index 디코딩 정보
+            user = User.objects.get(email=email)
+            # 사용자 index 디코딩 정보를 바탕으로한 사용자 정보
+
+            user.job = job
+            user.name = name
+            # 정보 재설정
+
+            user.save()
+            # 변경 정보 저장
+        except Exception:
+            raise AuthenticationFailed("The reset link is invalid", 401)
+
+        return super().validate(attrs)
