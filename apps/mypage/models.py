@@ -47,8 +47,6 @@ class Skill(models.Model):
     class Meta:
         db_table = "skill"
 
-    def __str__(self):
-        return self.skill
 
 class UserSkill(models.Model):
     skill= models.ForeignKey("Skill", related_name="skill_id", verbose_name="기술id", on_delete=models.CASCADE, db_column="skill_id")
@@ -56,7 +54,7 @@ class UserSkill(models.Model):
     content = models.TextField(verbose_name="기술설명")
 
     class Meta:
-        db_table = "use_skill"
+        db_table = "user_skill"
 
     def __str__(self):
         return self.UserSkill

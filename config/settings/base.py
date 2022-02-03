@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "apps.user",
     "apps.mypage",
     "apps.portfolio",
+    # "apps.gmail",
 
     "rest_framework.authtoken",
 ]
