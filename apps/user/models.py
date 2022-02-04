@@ -5,16 +5,16 @@ from django.db import models
 
 # user를 생성할 때 사용하는 helper class
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, password=None):
+    def create_user(self, name, email, password=None):
 
         if email is None:
             raise TypeError("Users should have a Email")
 
-        if username is None:
+        if name is None:
             raise TypeError("Users should have a username")
 
         user = self.model(
-            username=username,
+            name=name,
             email=self.normalize_email(email),
         )
         user.set_password(password)
@@ -22,12 +22,12 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, username, email, password=None):
+    def create_superuser(self, name, email, password=None):
         if password is None:
             raise TypeError("Password should not be none")
 
         user = self.create_user(
-            username,
+            name,
             email,
             password,
         )
@@ -58,7 +58,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["name"]
+    REQUIRED_FIELDS = ['name']
 
     def __str__(self):
         return self.email

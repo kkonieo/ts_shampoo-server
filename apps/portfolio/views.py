@@ -14,13 +14,15 @@ class ProjectAPI(generics.ListCreateAPIView):
     # permission_classes = [IsAuthenticatedOrReadOnly]
     
     def get_queryset(self):
-        return Project.objects.filter(author=self.kwargs['author'])
+        return Project.objects.filter(author_id=self.kwargs['author'])
         
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        serializer.save()
     
 class ProjectDetailAPI(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Project.objects.all()
     serializer_class = ProjectDetailSerializer
     # authentication_classes = [TokenAuthentication]
     # permission_classes = [IsOwnerOrReadOnly]
+    
+    def get_queryset(self):
+        return Project.objects.filter(id=self.kwargs['pk'])

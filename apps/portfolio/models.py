@@ -8,7 +8,7 @@ from apps.user.models import User
 
 
 class Project(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="projects")
+    author_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="projects")
     title = models.CharField("제목", max_length=50, null=False)
     startDate = models.DateField("시작일", null=False)
     endDate = models.DateField("종료일", null=False)
