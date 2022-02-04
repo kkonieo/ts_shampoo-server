@@ -4,7 +4,6 @@ from django.db import models
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
-
 # user를 생성할 때 사용하는 helper class
 class UserManager(BaseUserManager):
     def create_user(self, name, email, password=None):
