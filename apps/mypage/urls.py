@@ -1,6 +1,6 @@
 from django.urls import include, path
-from . import views
 
+from . import views
 
 urlpatterns = [
 
@@ -14,5 +14,5 @@ urlpatterns = [
     path("award/<int:pk>/", views.award_detail),
 
     path("skill", views.user_skill_list),
-    path("skill/<int:pk>/", views.user_skill_detail),    
-    ]
+    path("skill/<int:pk>/", views.user_skill_detail)
+]

@@ -46,8 +46,8 @@ if settings.DEBUG:
             schema_view.with_ui("swagger", cache_timeout=0),
             name="schema-swagger-ui",
         ),
-        path("user/", include("apps.user.urls"), name="user")
+        path("user/", include("apps.user.urls"), name="user"),
         path("mypage/", include("apps.mypage.urls")),
-        path("tag/", include("apps.tag.urls"))
-      
+        path("tag/", include("apps.tag.urls")),
+
     ]

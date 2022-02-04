@@ -60,10 +60,9 @@ INSTALLED_APPS = [
     "apps.portfolio",
     "apps.tag",
     # swagger
-    "drf_yasg", 
+    "drf_yasg",
     # cors
     "corsheaders",
-    
 ]
 
 REST_FRAMEWORK = {
