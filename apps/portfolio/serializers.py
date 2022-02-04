@@ -1,9 +1,11 @@
-from .models import Project, ProjectLink
 # from apps.user.serializers import UserSerializer
 from rest_framework import serializers
 
+from .models import Project, ProjectLink
+
+
 class ProjectLinkSerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         model = ProjectLink
         fields = [
@@ -11,9 +13,10 @@ class ProjectLinkSerializer(serializers.ModelSerializer):
             "linkUrl",
         ]
 
+
 class ProjectSerializer(serializers.ModelSerializer):
     # urlLink = ProjectLinkSerializer(many=True)
-    
+
     class Meta:
         model = Project
         fields = [
@@ -27,7 +30,8 @@ class ProjectSerializer(serializers.ModelSerializer):
             "imgSrc",
             "gifSrc",
         ]
-    
+
+
 class ProjectDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
@@ -45,4 +49,3 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
             "gitUrlLink",
             "urlLink",
         ]
-
