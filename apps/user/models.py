@@ -1,12 +1,14 @@
-from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
-                                        PermissionsMixin,)
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
 from django.db import models
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
 # user를 생성할 때 사용하는 helper class
 class UserManager(BaseUserManager):
-  
     def create_user(self, name, email, password=None):
 
         if email is None:
@@ -39,6 +41,7 @@ class UserManager(BaseUserManager):
         user.save()
 
         return user
+
 
 # 실제 모델을 생성하는 class
 class User(AbstractBaseUser, PermissionsMixin):
@@ -87,5 +90,5 @@ class User(AbstractBaseUser, PermissionsMixin):
         return {
             "refresh": str(refresh),
             "access": str(access),
-            "expired": str(access['exp'])
+            "expired": str(access["exp"]),
         }
