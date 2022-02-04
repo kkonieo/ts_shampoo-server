@@ -1,7 +1,7 @@
-[docs] : 커밋 메시지 템플릿 추가
+[feat] : models class Project 추가
 
-- what : 커밋 메시지 템플릿 추가
-- why : 커밋의 일관성을 위해서
+- what : models에 project 추가
+- why : 데이터베이스 생성
 
 # --- COMMIT END ---
 
