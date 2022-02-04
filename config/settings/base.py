@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import datetime
 import os
 from pathlib import Path
 
@@ -46,30 +47,51 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib",
+    # rest
     "rest_framework",
+    "rest_framework_simplejwt.token_blacklist",
+    "rest_framework.authtoken",
+    # django filter
     'django_filters',
-
+    # apps
     "apps.core",
-    "apps.board",
     "apps.user",
     "apps.mypage",
     "apps.portfolio",
     "apps.tag",
-    # "apps.gmail",
-
-    "rest_framework.authtoken",
+    # swagger
+    "drf_yasg", 
+    # cors
+    "corsheaders",
+    
 ]
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],
-    'DEFAULT_FILTER_BACKENDS': [
+    "DEFAULT_FILTER_BACKENDS": [
         'django_filters.rest_framework.DjangoFilterBackend'
-    ]
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
 }
 
 # -----------------------------------------------------
+
+# SWAGGER
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+        }
+    }
+}
+
+# -------------------------------------------------------
 
 
 MIDDLEWARE = [
@@ -122,13 +144,9 @@ DATABASES = {
     },
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+AUTH_USER_MODEL = "user.User"
 
+# -------------------------------------------------------------------
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -170,4 +188,19 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-AUTH_USER_MODEL = "user.User"
+
+
+# Simple JWT
+REST_USE_JWT = True
+
+SIMPLE_JWT = {
+    # 토큰의 life cycle
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1),
+}
+
+
+# -----------------------------------------------
+
+# CORS
+CORS_ORIGIN_ALLOW_ALL = True
