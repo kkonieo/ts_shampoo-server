@@ -2,13 +2,13 @@ from django.shortcuts import render
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 from .models import Profile, Resume, Award, Skill, UserSkill
 from .serializers import ProfileSerializer, ResumeSerializer, AwardSerializer, SkillSerializer, UserSkillSerializer
-
-from rest_framework.decorators import action
-from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
 
 class ProfileViewSet(ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['author',]
 
 profile_list = ProfileViewSet.as_view({
     'get': 'list',
@@ -24,6 +24,8 @@ profile_detail = ProfileViewSet.as_view({
 class ResumeViewSet(ModelViewSet):
     queryset = Resume.objects.all()
     serializer_class = ResumeSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['author',]
 
 resume_list = ResumeViewSet.as_view({
     'get': 'list',
@@ -40,6 +42,8 @@ resume_detail = ResumeViewSet.as_view({
 class AwardViewSet(ModelViewSet):
     queryset = Award.objects.all()
     serializer_class = AwardSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['author',]
 
 award_list = AwardViewSet.as_view({
     'get': 'list',
@@ -52,13 +56,12 @@ award_detail = AwardViewSet.as_view({
     'delete': 'destroy',
 })
 
-# class SkillViewSet(ModelViewSet):
-#     queryset = Skill.objects.all()
-#     serializer_class = SkillSerializer
 
 class UserSkillViewSet(ModelViewSet):
     queryset = UserSkill.objects.all()
     serializer_class = UserSkillSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['user',]
 
 user_skill_list = UserSkillViewSet.as_view({
     'get': 'list',
