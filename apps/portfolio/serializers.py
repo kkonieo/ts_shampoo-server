@@ -33,6 +33,8 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class ProjectDetailSerializer(serializers.ModelSerializer):
+    # urlLink = ProjectLinkSerializer(many=True)
+
     class Meta:
         model = Project
         fields = [
@@ -45,7 +47,4 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
             "explain",
             "imgSrc",
             "gifSrc",
-            "demoUrlLink",
-            "gitUrlLink",
-            "urlLink",
         ]
