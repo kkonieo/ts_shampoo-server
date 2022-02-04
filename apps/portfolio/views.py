@@ -1,17 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import Project
 from .serializers import ProjectSerializer, ProjectDetailSerializer
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
-# from knox.auth import TokenAuthentication
-from .permissions import IsOwnerOrReadOnly
+
+from apps.portfolio import serializers
 
 # Create your views here.
 
 class ProjectAPI(generics.ListCreateAPIView):
     serializer_class = ProjectSerializer
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticatedOrReadOnly]
     
     def get_queryset(self):
         return Project.objects.filter(author_id=self.kwargs['author'])
@@ -19,10 +16,27 @@ class ProjectAPI(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save()
     
-class ProjectDetailAPI(generics.RetrieveUpdateDestroyAPIView):
+class ProjectDetailAPI(generics.ListCreateAPIView):
     serializer_class = ProjectDetailSerializer
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsOwnerOrReadOnly]
     
     def get_queryset(self):
         return Project.objects.filter(id=self.kwargs['pk'])
+
+class ProjectDeleteAPI(generics.ListCreateAPIView):
+    serializer_class = ProjectDetailSerializer
+    
+    def get_queryset(self):
+        target = Project.objects.filter(id=self.kwargs['pk'])
+        target.delete()
+
+class ProjectUpdateAPI(generics.ListCreateAPIView):
+    serializer_class = ProjectDetailSerializer
+    
+    def get_queryset(self):
+        return Project.objects.filter(id=self.kwargs['pk'])
+    
+    def update(self, serializer):
+        try:
+            serializer.update()
+        except:
+            raise serializer.ValidationError('ValidationError')
