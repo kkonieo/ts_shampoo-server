@@ -58,4 +58,4 @@ if settings.DEBUG:
         path("mypage/", include("apps.mypage.urls")),
         path("tag/", include("apps.tag.urls")),
         path("project/", include("apps.portfolio.urls")),
-    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # End
