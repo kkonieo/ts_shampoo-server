@@ -87,5 +87,5 @@ class User(AbstractBaseUser, PermissionsMixin):
         return {
             "refresh": str(refresh),
             "access": str(access),
-            "expired": str(access['exp'])
+            "expired": str(access["exp"]),
         }

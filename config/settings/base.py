@@ -57,10 +57,14 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt.token_blacklist",
     "rest_framework.authtoken",
+    # django filter
+    'django_filters',
     # apps
-    "apps.portfolio",
-    "apps.mypage",
+    "apps.core",
     "apps.user",
+    "apps.mypage",
+    "apps.portfolio",
+    "apps.tag",
     # swagger
     "drf_yasg",
     # cors
@@ -68,10 +72,17 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",
+    ],
+    "DEFAULT_FILTER_BACKENDS": [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ],
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
+
 # -----------------------------------------------------
 
 # SWAGGER
@@ -131,8 +142,11 @@ DATABASES = {
         "PASSWORD": os.environ.get("DB_PASSWORD"),
         "HOST": os.environ.get("DB_HOST"),
         "PORT": os.environ.get("DB_PORT"),
+
+        "OPTIONS": {
+            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     },
-    "OPTIONS": {"init_command": "SET sql_mode='STRICT_TRANS_TABLES'"},
 }
 
 AUTH_USER_MODEL = "user.User"
@@ -179,6 +193,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
 # Simple JWT
 REST_USE_JWT = True
 

@@ -54,5 +54,8 @@ if settings.DEBUG:
             name="schema-swagger-ui",
         ),
         path("user/", include("apps.user.urls"), name="user"),
+
+        path("mypage/", include("apps.mypage.urls")),
+        path("tag/", include("apps.tag.urls")),
         path("project/", include("apps.portfolio.urls")),
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
