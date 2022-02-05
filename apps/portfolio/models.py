@@ -30,3 +30,6 @@ class ProjectLink(models.Model):
 
     linkName = models.CharField("링크명", max_length=50, null=False)
     linkUrl = models.URLField("링크", null=False)
+
+    def __str__(self):
+        return f'{self.linkName} {self.linkUrl}'
