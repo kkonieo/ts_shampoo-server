@@ -3,11 +3,14 @@ from django.db import models
 
 from apps.core.models import TimeStampModel
 
-# from apps.user.models import User
-
 
 class Profile(TimeStampModel):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="작성자", related_name="profile_author", on_delete=models.CASCADE) # noqa : E501
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name="작성자",
+        related_name="profile_author",
+        on_delete=models.CASCADE,
+    )  # noqa : E501
     content = models.TextField(verbose_name="자기소개")
 
     class Meta:
@@ -18,7 +21,12 @@ class Profile(TimeStampModel):
 
 
 class Resume(TimeStampModel):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="작성자", related_name="resume_author", on_delete=models.CASCADE) # noqa : E501
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name="작성자",
+        related_name="resume_author",
+        on_delete=models.CASCADE,
+    )  # noqa : E501
     title = models.CharField(max_length=100, verbose_name="이력제목")
     year = models.IntegerField(verbose_name="연도")
     content = models.TextField(verbose_name="이력내용")
@@ -33,7 +41,12 @@ class Resume(TimeStampModel):
 
 
 class Award(TimeStampModel):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="작성자", related_name="award_author", on_delete=models.CASCADE) # noqa : E501
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name="작성자",
+        related_name="award_author",
+        on_delete=models.CASCADE,
+    )  # noqa : E501
     award = models.CharField(max_length=100, verbose_name="수상이름")
     year = models.IntegerField(verbose_name="연도")
     content = models.TextField(verbose_name="수상내용")
@@ -43,22 +56,3 @@ class Award(TimeStampModel):
 
     def __str__(self):
         return self.award
-
-
-class Skill(models.Model):
-    name = models.CharField(max_length=100, verbose_name="기술이름")
-
-    class Meta:
-        db_table = "skill"
-
-
-class UserSkill(models.Model):
-    skill= models.ForeignKey("Skill", related_name="skill_id", verbose_name="기술id", on_delete=models.CASCADE, db_column="skill_id") # noqa : E501
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_skill", verbose_name="작성자",on_delete=models.CASCADE) # noqa : E501
-    content = models.TextField(verbose_name="기술설명")
-
-    class Meta:
-        db_table = "user_skill"
-
-    def __str__(self):
-        return self.UserSkill
