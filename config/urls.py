@@ -23,7 +23,6 @@ from rest_framework import permissions
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-
     # path("auth/", include("apps.user.urls")),
 ]
 
@@ -54,8 +53,8 @@ if settings.DEBUG:
             name="schema-swagger-ui",
         ),
         path("user/", include("apps.user.urls"), name="user"),
-
         path("mypage/", include("apps.mypage.urls")),
         path("tag/", include("apps.tag.urls")),
         path("project/", include("apps.portfolio.urls")),
+        path("skill/", include("apps.skill.urls")),
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
