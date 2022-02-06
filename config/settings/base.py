@@ -62,10 +62,11 @@ INSTALLED_APPS = [
     # apps
     "apps.core",
     "apps.user",
-    "apps.mypage",
+    "apps.profile",
     "apps.portfolio",
-    "apps.tag",
-    "apps.skill",
+    "apps.career",
+    "apps.award",
+    "apps.job",
     # swagger
     "drf_yasg",
     # cors
