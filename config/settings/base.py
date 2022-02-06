@@ -35,11 +35,11 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 # 미디어 파일을 관리할 루트 media 디렉터리
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # 각 media file에 대한 URL prefix
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 
-AUTH_USER_MODEL='user.User'
+AUTH_USER_MODEL = "user.User"
 
 # APPS
 # ----------------------------------------------------
@@ -58,13 +58,15 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt.token_blacklist",
     "rest_framework.authtoken",
     # django filter
-    'django_filters',
+    "django_filters",
     # apps
     "apps.core",
     "apps.user",
-    "apps.mypage",
+    "apps.profile",
     "apps.portfolio",
-    "apps.tag",
+    "apps.career",
+    "apps.award",
+    "apps.job",
     # swagger
     "drf_yasg",
     # cors
@@ -75,9 +77,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],
-    "DEFAULT_FILTER_BACKENDS": [
-        'django_filters.rest_framework.DjangoFilterBackend'
-    ],
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
@@ -142,7 +142,6 @@ DATABASES = {
         "PASSWORD": os.environ.get("DB_PASSWORD"),
         "HOST": os.environ.get("DB_HOST"),
         "PORT": os.environ.get("DB_PORT"),
-
         "OPTIONS": {
             "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
         },
