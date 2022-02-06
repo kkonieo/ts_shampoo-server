@@ -10,6 +10,8 @@ class SkillSerializer(serializers.ModelSerializer):
 
 
 class UserSkillSerializer(serializers.ModelSerializer):
+    skill = SkillSerializer(read_only=True)
+
     class Meta:
         model = UserSkill
         fields = "__all__"
