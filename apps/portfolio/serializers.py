@@ -1,4 +1,5 @@
 # from apps.user.serializers import UserSerializer
+from drf_writable_nested import WritableNestedModelSerializer
 from rest_framework import serializers
 
 from .models import Project, ProjectLink
@@ -8,43 +9,20 @@ class ProjectLinkSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProjectLink
-        fields = [
-            "linkName",
-            "linkUrl",
-        ]
+        fields = '__all__'
 
 
-class ProjectSerializer(serializers.ModelSerializer):
-    # urlLink = ProjectLinkSerializer(many=True)
+class ProjectSerializer(WritableNestedModelSerializer, serializers.ModelSerializer):
+    urlLink = ProjectLinkSerializer(many=True, source='projectLink')
 
     class Meta:
         model = Project
-        fields = [
-            "id",
-            "author_id",
-            "title",
-            "startDate",
-            "endDate",
-            "techStack",
-            "explain",
-            "imgSrc",
-            "gifSrc",
-        ]
+        fields = '__all__'
 
 
-class ProjectDetailSerializer(serializers.ModelSerializer):
-    # urlLink = ProjectLinkSerializer(many=True)
+class ProjectDetailSerializer(WritableNestedModelSerializer, serializers.ModelSerializer):  # noqa : W503
+    urlLink = ProjectLinkSerializer(many=True, source='projectLink')
 
     class Meta:
         model = Project
-        fields = [
-            "id",
-            "author_id",
-            "title",
-            "startDate",
-            "endDate",
-            "techStack",
-            "explain",
-            "imgSrc",
-            "gifSrc",
-        ]
+        fields = '__all__'
