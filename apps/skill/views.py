@@ -6,6 +6,18 @@ from .models import Skill, UserSkill
 from .serializers import SkillSerializer, UserSkillSerializer
 
 
+class SkillViewSet(ModelViewSet):
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
+
+
+skill_list = SkillViewSet.as_view(
+    {
+        "get": "list",
+    }
+)
+
+
 class UserSkillViewSet(ModelViewSet):
     queryset = UserSkill.objects.all()
     serializer_class = UserSkillSerializer
@@ -14,13 +26,6 @@ class UserSkillViewSet(ModelViewSet):
         "user",
     ]
 
-
-user_skill_list = UserSkillViewSet.as_view(
-    {
-        "get": "list",
-        "post": "create",
-    }
-)
 
 user_skill_detail = UserSkillViewSet.as_view(
     {
