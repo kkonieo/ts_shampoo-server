@@ -14,35 +14,20 @@ class ProjectAPI(generics.ListCreateAPIView):
     serializer_class = ProjectSerializer
 
     def get_queryset(self):
-        return Project.objects.filter(author_id=self.kwargs['author'])
+        try:
+            return Project.objects.filter(author_id=self.kwargs['author'])
+        except BaseException as e:
+            print(e.message)
 
     def perform_create(self, serializer):
         serializer.save()
 
 
-class ProjectDetailAPI(generics.ListCreateAPIView):
+class ProjectDetailAPI(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProjectDetailSerializer
 
     def get_queryset(self):
-        return Project.objects.filter(id=self.kwargs['pk'])
-
-
-class ProjectDeleteAPI(generics.ListCreateAPIView):
-    serializer_class = ProjectDetailSerializer
-
-    def get_queryset(self):
-        target = Project.objects.filter(id=self.kwargs['pk'])
-        target.delete()
-
-
-class ProjectUpdateAPI(generics.ListCreateAPIView):
-    serializer_class = ProjectDetailSerializer
-
-    def get_queryset(self):
-        return Project.objects.filter(id=self.kwargs['pk'])
-
-    def update(self, serializer):
         try:
-            serializer.update()
-        except ValidationError as e:
+            return Project.objects.filter(author_id=self.kwargs['author'], id=self.kwargs['pk'])  # noqa : W503
+        except BaseException as e:
             print(e.message)
