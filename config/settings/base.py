@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     "apps.award",
     "apps.job",
     "apps.skill",
+    "apps.home",
     # swagger
     "drf_yasg",
     # cors
