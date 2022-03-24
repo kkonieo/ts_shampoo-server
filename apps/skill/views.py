@@ -5,6 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 from .models import Skill, UserSkill
 from .serializers import SkillSerializer, UserSkillSerializer
 
+
 class SkillViewSet(ModelViewSet):
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
