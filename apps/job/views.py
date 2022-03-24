@@ -10,7 +10,8 @@ class JobViewSet(ModelViewSet):
     serializer_class = JobSerializer
 
 
-job_list = JobViewSet.as_view({
-    'get': 'list',
-    'post': 'create',
-})
+job_list = JobViewSet.as_view(
+    {
+        "get": "list",
+    }
+)
