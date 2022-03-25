@@ -59,4 +59,5 @@ if settings.DEBUG:
         path("award/", include("apps.award.urls")),
         path("career/", include("apps.career.urls")),
         path("skill/", include("apps.skill.urls")),
+        path("home/", include("apps.home.urls")),
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
