@@ -68,13 +68,13 @@ class UserTokenRefreshView(TokenRefreshView):
 
 class DeleteUserView(APIView):
     """
-    탈퇴시 계정 삭제 
+    탈퇴시 계정 삭제
     """
     # permission_classes = [permissions.IsAuthenticated]
     permission_classes = [IsAuthenticated]
 
     def delete(self, request, *args, **kwargs):
-        user=self.request.user
+        user = self.request.user
         user.delete()
 
-        return Response({"result":"user delete"})
+        return Response({"result": "user delete"})
