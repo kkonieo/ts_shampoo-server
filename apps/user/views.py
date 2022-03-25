@@ -1,7 +1,9 @@
 from rest_framework import permissions, status
 from rest_framework.generics import GenericAPIView
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework.permissions import IsAuthenticated
 
 from .serializers import (GoogleSocialAuthSerializer, LogoutSerializer,
                           UserUpdateSerializer,)
@@ -62,3 +64,17 @@ class UserTokenRefreshView(TokenRefreshView):
         refresh 토큰을 전송하고 새로운 access 토큰값을 발급받습니다.
         """
         return super().post(request, *args, **kwargs)
+
+
+class DeleteUserView(APIView):
+    """
+    탈퇴시 계정 삭제 
+    """
+    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, *args, **kwargs):
+        user=self.request.user
+        user.delete()
+
+        return Response({"result":"user delete"})
