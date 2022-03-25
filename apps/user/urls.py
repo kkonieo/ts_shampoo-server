@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import (GoogleSocialAuthView, LogoutAPIView, UserAPIView,
-                    UserTokenRefreshView, DeleteUserView)
+                    UserTokenRefreshView, DeleteUserView,)
 
 urlpatterns = [
     path("register/", GoogleSocialAuthView.as_view(), name="register"),
