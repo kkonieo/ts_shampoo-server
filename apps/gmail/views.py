@@ -25,4 +25,4 @@ class SendEmail(APIView):
         to = [to_email]
         message = "안녕하세요, \nts-shampoo에서 {0}님이 {1}님의 이력을 보고 연락드립니다. \n{2}로 회신 부탁드립니다.\n\n{3}".format(from_name, to_name, from_email, email_text) # noqa : E501
         EmailMessage(subject=subject, body=message, to=to, from_email=FROM_EMAIL).send()
-        return Response({"message": "ok"})
+        return Response({"message": "true"})
