@@ -16,9 +16,9 @@ class Project(models.Model):
     explain = models.TextField("내용", null=False)
 
     imgSrc = models.ImageField("png이미지소스", upload_to='projectImg/',
-                               blank=True, null=True)
+                               blank=True, null=False)
     gifSrc = models.ImageField("gif이미지소스", upload_to='projectImg/',
-                               blank=True, null=True)
+                               blank=True, null=False)
 
     def __str__(self):
         return self.title
@@ -28,8 +28,8 @@ class ProjectLink(models.Model):
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE,
                                    related_name="projectLink")
 
-    linkName = models.CharField("링크명", max_length=50, null=False)
-    linkUrl = models.URLField("링크", null=False)
+    linkName = models.CharField("링크명", max_length=50, blank=True, null=False)
+    linkUrl = models.URLField("링크", blank=True, null=False)
 
     def __str__(self):
         return f'{self.linkName} {self.linkUrl}'

@@ -18,6 +18,7 @@ class ProjectSerializer(WritableNestedModelSerializer, serializers.ModelSerializ
     class Meta:
         model = Project
         fields = '__all__'
+        depth = 1
 
 
 class ProjectDetailSerializer(WritableNestedModelSerializer, serializers.ModelSerializer):  # noqa : W503
