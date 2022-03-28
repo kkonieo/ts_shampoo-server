@@ -4,17 +4,32 @@ from config import settings
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from apps.user.models import User
+
 
 FROM_EMAIL = settings.base.EMAIL_HOST_USER
 
 
+class UserEmail(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        """
+        slug로 대상 email 및 정보 조회
+        """
+        user = User.objects.get(slug=self.kwargs['slug'])
+        email = str(user)
+        name = str(user.name)
+        return Response({"email": email,
+                        "name": name})
+
 class SendEmail(APIView):
-    """
-    이메일 전송
-    """
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
+        """
+        이메일 전송
+        """
         from_email = request.data.get("from_email")
         from_name = request.data.get("from_name")
         email_text = request.data.get("email_text")
