@@ -23,6 +23,7 @@ class UserEmail(APIView):
         return Response({"email": email,
                         "name": name})
 
+
 class SendEmail(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -33,8 +34,8 @@ class SendEmail(APIView):
         from_email = request.data.get("from_email")
         from_name = request.data.get("from_name")
         email_text = request.data.get("email_text")
-        to_email = request.user
-        to_name = request.user.name
+        to_email = request.data.get("to_email")
+        to_name = request.data.get("to_name")
 
         subject = "ts-shampoo에서 {}님의 이력 보고 제안 드립니다.".format(to_name)
         to = [to_email]
