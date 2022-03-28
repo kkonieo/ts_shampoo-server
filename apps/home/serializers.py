@@ -12,6 +12,7 @@ class HomeSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             "id",
+            "slug",
             "name",
             "job",
             "user_skill",
