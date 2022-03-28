@@ -68,6 +68,8 @@ INSTALLED_APPS = [
     "apps.award",
     "apps.job",
     "apps.gmail",
+    "apps.skill",
+    "apps.home",
     # swagger
     "drf_yasg",
     # cors
@@ -212,7 +214,7 @@ REST_USE_JWT = True
 
 SIMPLE_JWT = {
     # 토큰의 life cycle
-    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=5),
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(hours=6),
     "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1),
 }
 
