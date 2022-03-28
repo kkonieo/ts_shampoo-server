@@ -2,6 +2,7 @@ from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin,)
 from django.db import models
 from rest_framework_simplejwt.tokens import RefreshToken
+from apps.core.helper import generate_nanoid
 
 
 # user를 생성할 때 사용하는 helper class
@@ -60,6 +61,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(verbose_name="유저 이름", max_length=10, db_index=True)
     email = models.EmailField(
         verbose_name="email", max_length=255, unique=True, db_index=True
+    )
+    slug = models.SlugField(
+        verbose_name=("slug"),
+        unique=True,
+        default=generate_nanoid,
+        max_length=40,
     )
     job = models.CharField(verbose_name="직군", max_length=100)
     img = models.CharField(verbose_name="이미지", max_length=200, null=True, blank=True)
