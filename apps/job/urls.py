@@ -1,7 +1,7 @@
 from django.urls import include, path
 
-from . import views
+from .views import JobListAPIView
 
 urlpatterns = [
-    path("", views.job_list),
+    path("", JobListAPIView.as_view()),
 ]

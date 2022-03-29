@@ -1,17 +1,12 @@
-from django.shortcuts import render
-from rest_framework.viewsets import ModelViewSet
-
+from rest_framework.generics import ListAPIView
 from .models import Job
 from .serializers import JobSerializer
 
 
-class JobViewSet(ModelViewSet):
+class JobListAPIView(ListAPIView):
+    """
+    직군 리스트
+    """
+
     queryset = Job.objects.all()
     serializer_class = JobSerializer
-
-
-job_list = JobViewSet.as_view(
-    {
-        "get": "list",
-    }
-)
