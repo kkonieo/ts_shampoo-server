@@ -19,7 +19,7 @@ def generate_name(name):
         return generate_name(random_name)
 
 
-def register_social_user(provider, user_id, email, name):
+def register_social_user(provider, email, name, img):
     filtered_user_by_email = User.objects.filter(email=email)
     # user가 이미 있는지 확인
     register_check = False
@@ -39,6 +39,7 @@ def register_social_user(provider, user_id, email, name):
                 "email": registered_user.email,
                 "tokens": registered_user.tokens(),
                 "register_check": str(register_check),
+                "img": img,
                 "job": User.objects.get(email=email).job
             }
             # 자격 검증을 통과하는 경우 유저의 이름과 email tokens를 반환한다.
@@ -54,6 +55,7 @@ def register_social_user(provider, user_id, email, name):
             "name": generate_name(name),
             "email": email,
             "password": os.environ.get("SOCIAL_SECRET"),
+            "img": img,
         }
         user = User.objects.create_user(**user)
         user.is_verified = True
@@ -69,5 +71,6 @@ def register_social_user(provider, user_id, email, name):
             "name": new_user.name,
             "tokens": new_user.tokens(),
             "register_check": str(register_check),
+            "img": img,
             "job": User.objects.get(email=email).job
         }

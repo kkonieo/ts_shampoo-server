@@ -7,7 +7,7 @@ from apps.core.helper import generate_nanoid
 
 # user를 생성할 때 사용하는 helper class
 class UserManager(BaseUserManager):
-    def create_user(self, name, email, password=None):
+    def create_user(self, name, email, img, password=None):
 
         if email is None:
             raise TypeError("Users should have a Email")
@@ -18,6 +18,7 @@ class UserManager(BaseUserManager):
         user = self.model(
             name=name,
             email=self.normalize_email(email),
+            img=img,
         )
         user.set_password(password)
         user.save()
@@ -70,6 +71,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     job = models.CharField(verbose_name="직군", max_length=100)
     img = models.CharField(verbose_name="이미지", max_length=200, null=True, blank=True)
+    github = models.CharField(verbose_name="깃헙 주소", max_length=200, null=True, blank=True)  # noqa : E501
     is_active = models.BooleanField(verbose_name="기본 권한", default=True)
     is_staff = models.BooleanField(verbose_name="슈퍼 유저", default=False)
     is_verified = models.BooleanField(verbose_name="email 인증자", default=False)
