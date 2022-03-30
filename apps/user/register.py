@@ -34,7 +34,7 @@ def register_social_user(provider, user_id, email, name):
             register_check = True
             # 가입이 되어있는지 체크
             return {
-                "user_id": user_id,
+                "user_id": User.objects.get(email=email).id,
                 "name": registered_user.name,
                 "email": registered_user.email,
                 "tokens": registered_user.tokens(),
@@ -63,7 +63,7 @@ def register_social_user(provider, user_id, email, name):
         new_user = authenticate(email=email, password=os.environ.get("SOCIAL_SECRET"))
         # 마찬가지로 자격검증을 수행한다.
         return {
-            "user_id": user_id,
+            "user_id": User.objects.get(email=email).id,
             "email": new_user.email,
             "name": new_user.name,
             "tokens": new_user.tokens(),
