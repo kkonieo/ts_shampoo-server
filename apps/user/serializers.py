@@ -61,7 +61,7 @@ class LogoutSerializer(serializers.Serializer):
 
 class UserUpdateSerializer(serializers.Serializer):
     """
-    user 정보 변경
+    회원가입시 user 정보 변경
     """
 
     # 새로 설정될 token
@@ -103,3 +103,19 @@ class UserUpdateSerializer(serializers.Serializer):
             raise AuthenticationFailed("The reset link is invalid", 401)
 
         return super().validate(attrs)
+
+
+class MypageUserUpdateSerializer(serializers.ModelSerializer):
+    """
+    마이페이지 user 정보 변경
+    """
+
+    class Meta:
+        model = User
+        fields = (
+            "email",
+            "name",
+            "job",
+            "github",
+            "img",
+        )
