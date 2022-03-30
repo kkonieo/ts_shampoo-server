@@ -20,8 +20,10 @@ class UserEmail(APIView):
         user = User.objects.get(slug=self.kwargs['slug'])
         email = str(user)
         name = str(user.name)
+        github = str(user.github)
         return Response({"email": email,
-                        "name": name})
+                        "name": name,
+                        "github": github})
 
 
 class SendEmail(APIView):
