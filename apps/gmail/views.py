@@ -22,8 +22,8 @@ class UserEmail(APIView):
         name = str(user.name)
         github = str(user.github)
         return Response({"email": email,
-                        "name": name,
-                        "github": github})
+                         "name": name,
+                         "github": github})
 
 
 class SendEmail(APIView):
