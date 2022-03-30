@@ -38,7 +38,8 @@ def register_social_user(provider, user_id, email, name):
                 "name": registered_user.name,
                 "email": registered_user.email,
                 "tokens": registered_user.tokens(),
-                "register_check": str(register_check)
+                "register_check": str(register_check),
+                "job": User.objects.get(email=email).job
             }
             # 자격 검증을 통과하는 경우 유저의 이름과 email tokens를 반환한다.
 
@@ -67,5 +68,6 @@ def register_social_user(provider, user_id, email, name):
             "email": new_user.email,
             "name": new_user.name,
             "tokens": new_user.tokens(),
-            "register_check": str(register_check)
+            "register_check": str(register_check),
+            "job": User.objects.get(email=email).job
         }
