@@ -1,12 +1,13 @@
 from rest_framework import permissions, status
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework.permissions import IsAuthenticated
 
+from .models import User
 from .serializers import (GoogleSocialAuthSerializer, LogoutSerializer,
-                          UserUpdateSerializer,)
+                          UserUpdateSerializer, MypageUserUpdateSerializer,)
 
 
 class GoogleSocialAuthView(GenericAPIView):
@@ -78,3 +79,25 @@ class DeleteUserView(APIView):
         user.delete()
 
         return Response({"result": "user delete"})
+
+
+class UserInfoView(RetrieveUpdateAPIView):
+    """
+    마이페이지에서 user 계정 정보 조회, 수정
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        queryset = User.objects.filter(id=request.user.id)
+        serializer = MypageUserUpdateSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def put(self, request):
+        user = User.objects.get(id=request.user.id)
+        serializer = MypageUserUpdateSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"success": True,
+                            "detail": "success update"},
+                            status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
