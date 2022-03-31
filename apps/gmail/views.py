@@ -11,8 +11,6 @@ FROM_EMAIL = settings.base.EMAIL_HOST_USER
 
 
 class UserEmail(APIView):
-    permission_classes = [IsAuthenticated]
-
     def get(self, request, *args, **kwargs):
         """
         slug로 대상 email 및 정보 조회
