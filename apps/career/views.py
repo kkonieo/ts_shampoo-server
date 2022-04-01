@@ -104,6 +104,6 @@ class CareerListAPIView(ListAPIView):
     """
     def get(self, request, *args, **kwargs):
         user = User.objects.get(slug=self.kwargs['slug'])
-        queryset = Career.objects.filter(author_id=user.id)
+        queryset = Career.objects.filter(author_id=user.id).order_by("start_date")
         serializer = CareerSerializer(queryset, many=True)
         return Response(serializer.data)

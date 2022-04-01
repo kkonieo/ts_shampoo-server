@@ -102,6 +102,6 @@ class AwardListAPIView(ListAPIView):
     """
     def get(self, request, *args, **kwargs):
         user = User.objects.get(slug=self.kwargs['slug'])
-        queryset = Award.objects.filter(author_id=user.id)
+        queryset = Award.objects.filter(author_id=user.id).order_by("year")
         serializer = AwardSerializer(queryset, many=True)
         return Response(serializer.data)
