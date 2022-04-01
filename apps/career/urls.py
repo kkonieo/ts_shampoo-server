@@ -1,8 +1,9 @@
 from django.urls import include, path
 
-from . import views
+from .views import CareerListAPIView, CareerDetailAPIView, CareerAPIView
 
 urlpatterns = [
-    path("", views.career_list),
-    path("<int:pk>/", views.career_detail),
+    path("<slug>", CareerListAPIView.as_view(), name="career_get"),
+    path("", CareerAPIView.as_view(), name="career_post"),
+    path("<int:pk>/", CareerDetailAPIView.as_view(), name="career_update"),
 ]
