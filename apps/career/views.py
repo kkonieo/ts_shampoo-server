@@ -46,8 +46,6 @@ class CareerAPIView(APIView):
 
         return Response(serializer.errors)
 
-    # to do : 추가기능_한번만 생성하고 2번이상 생성 불가하도록
-
 
 class CareerDetailAPIView(APIView):
     permission_classes = [IsAuthenticated]
@@ -83,6 +81,7 @@ class CareerDetailAPIView(APIView):
             status.HTTP_200_OK: "성공",
             status.HTTP_401_UNAUTHORIZED: "권한 없음",
             status.HTTP_404_NOT_FOUND: "해당 경력이 존재하지 않음",
+            status.HTTP_405_METHOD_NOT_ALLOWED: "메서드 매칭되지 않음",
         },
     )
     def delete(self, request, pk):
@@ -95,8 +94,6 @@ class CareerDetailAPIView(APIView):
         career.delete()
         return Response({"detail": "success delete"},
                         status=status.HTTP_200_OK)
-
-    # to do : 추가기능_삭제한 후 다시 삭제하려하면 안된다는 메세지 띄우도록
 
 
 class CareerListAPIView(ListAPIView):
