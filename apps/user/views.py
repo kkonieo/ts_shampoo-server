@@ -3,11 +3,18 @@ from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenRefreshView
-from rest_framework.permissions import IsAuthenticated
+# from rest_framework.permissions import IsAuthenticated
 
 from .models import User
 from .serializers import (GoogleSocialAuthSerializer, LogoutSerializer,
                           UserUpdateSerializer, MypageUserUpdateSerializer,)
+
+
+class IsAuthenticated(permissions.IsAuthenticated):
+    def has_permission(self, request, view):
+        if request.method == 'OPTIONS':
+            return True
+        return super(IsAuthenticated, self).has_permission(request, view)
 
 
 class GoogleSocialAuthView(GenericAPIView):
@@ -71,8 +78,7 @@ class DeleteUserView(APIView):
     """
     탈퇴시 계정 삭제
     """
-    # permission_classes = [permissions.IsAuthenticated]
-    permission_classes = [IsAuthenticated]
+    permission_classes = (IsAuthenticated,)
 
     def delete(self, request, *args, **kwargs):
         user = self.request.user
@@ -85,7 +91,7 @@ class UserInfoView(RetrieveUpdateAPIView):
     """
     마이페이지에서 user 계정 정보 조회, 수정
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         queryset = User.objects.filter(id=request.user.id)
