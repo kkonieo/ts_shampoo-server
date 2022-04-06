@@ -25,8 +25,6 @@ class UserEmail(APIView):
 
 
 class SendEmail(APIView):
-    permission_classes = [IsAuthenticated]
-
     def post(self, request, *args, **kwargs):
         """
         이메일 전송

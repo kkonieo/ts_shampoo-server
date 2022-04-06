@@ -6,4 +6,6 @@ from .models import Award
 class AwardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Award
-        fields = "__all__"
+        fields = ("award",
+                  "year",
+                  "content",)
