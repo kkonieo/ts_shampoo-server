@@ -103,9 +103,10 @@ SWAGGER_SETTINGS = {
 
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -137,18 +138,25 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.mysql",
+#         "NAME": os.environ.get("DB_NAME"),
+#         "USER": os.environ.get("DB_USER"),
+#         "PASSWORD": os.environ.get("DB_PASSWORD"),
+#         "HOST": os.environ.get("DB_HOST"),
+#         "PORT": os.environ.get("DB_PORT"),
+#         "OPTIONS": {
+#             "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
+#         },
+#     },
+# }
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": os.environ.get("DB_NAME"),
-        "USER": os.environ.get("DB_USER"),
-        "PASSWORD": os.environ.get("DB_PASSWORD"),
-        "HOST": os.environ.get("DB_HOST"),
-        "PORT": os.environ.get("DB_PORT"),
-        "OPTIONS": {
-            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
-    },
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
 
 AUTH_USER_MODEL = "user.User"
