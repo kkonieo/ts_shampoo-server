@@ -3,6 +3,7 @@ from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
 from django.db import models
 from rest_framework_simplejwt.tokens import RefreshToken
 from apps.core.helper import generate_nanoid
+from apps.core.models import TimeStampModel
 
 
 # user를 생성할 때 사용하는 helper class
@@ -43,7 +44,7 @@ class UserManager(BaseUserManager):
 
 
 # 실제 모델을 생성하는 class
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin, TimeStampModel):
     """
     사용자 정의모델
     AUTH_PROVIDERS = 소셜 구분
