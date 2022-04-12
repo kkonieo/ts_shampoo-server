@@ -11,5 +11,5 @@ class HomeListAPIView(ListAPIView):
     메인 페이지 모든 사용자 정보 조회
     """
 
-    queryset = User.objects.all()
+    queryset = User.objects.filter(job='').order_by("-updated_at")
     serializer_class = HomeSerializer
