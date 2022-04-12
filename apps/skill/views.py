@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from apps.user.models import User
 from .models import Skill, UserSkill
-from .serializers import SkillSerializer, UserSkillSerializer
+from .serializers import SkillSerializer, UserSkillSerializer, UserSkillListSerializer
 
 
 class SkillListAPIView(ListAPIView):
@@ -40,22 +40,21 @@ class UserSkillAPIView(APIView):
     )
     def post(self, request):
         user = request.user.id
+        skill = request.data["skill"]
         serializer = UserSkillSerializer(data=request.data)
+        print("여기다여기야아아아")
+        print(serializer)
 
         if serializer.is_valid():
             validated_data = serializer.validated_data
-            user_has_skill = UserSkill.objects.filter(user_id=request.user.id).filter(skill_id=request.data["skill"])   # noqa : E501
-            if user_has_skill:
-                return Response({"detail": "user skill already exist"},
-                                status=status.HTTP_400_BAD_REQUEST)
-            else:
-                user_skill = UserSkill()
-                user_skill.user_id = user
-                user_skill.skill_id = request.data["skill"]
-                user_skill.content = validated_data["content"]
-                user_skill.save()
-                return Response({"detail": "success create user_skill"},
-                                status=status.HTTP_200_OK)
+
+            user_skill = UserSkill()
+            user_skill.user_id = user
+            user_skill.skill_id = skill
+            user_skill.content = validated_data["content"]
+            user_skill.save()
+            return Response({"detail": "success create user_skill"},
+                            status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -119,5 +118,6 @@ class UserSkillListAPIView(ListAPIView):
     def get(self, request, *args, **kwargs):
         user = User.objects.get(slug=self.kwargs['slug'])
         queryset = UserSkill.objects.filter(user_id=user.id)
-        serializer = UserSkillSerializer(queryset, many=True)
+        query_distinct = queryset.values("skill_id").distinct()
+        serializer = UserSkillListSerializer(query_distinct, many=True)
         return Response(serializer.data)
