@@ -27,7 +27,6 @@ class UserSkillAPIView(APIView):
 
     access token으로 허가된 사용자 가능
     """
-    # todo : 다른 user는 생성 권한 못하도록
     permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
@@ -45,8 +44,6 @@ class UserSkillAPIView(APIView):
 
         if serializer.is_valid():
             validated_data = serializer.validated_data
-
-            # 이미 저장한 기술이라면,
             user_has_skill = UserSkill.objects.filter(user_id=request.user.id).filter(skill_id=request.data["skill"])   # noqa : E501
             if user_has_skill:
                 return Response({"detail": "user skill already exist"},

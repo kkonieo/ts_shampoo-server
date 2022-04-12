@@ -17,3 +17,11 @@ class UserSkillSerializer(serializers.ModelSerializer):
         fields = ("id",
                   "skill",
                   "content",)
+
+
+class UserHasSkillSerializer(serializers.ModelSerializer):
+    skill = SkillSerializer(read_only=True)
+
+    class Meta:
+        model = UserSkill
+        fields = ("skill",)
