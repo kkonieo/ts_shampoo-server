@@ -14,4 +14,6 @@ class UserSkillSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserSkill
-        fields = "__all__"
+        fields = ("id",
+                  "skill",
+                  "content",)
