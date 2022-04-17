@@ -101,4 +101,4 @@ class ProfileRetrieveAPIView(APIView):
         user = User.objects.get(slug=self.kwargs['slug'])
         queryset = Profile.objects.filter(author_id=user.id)
         serializer = ProfileSerializer(queryset, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data[0])
