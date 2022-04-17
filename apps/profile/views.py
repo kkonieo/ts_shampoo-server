@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -99,6 +100,6 @@ class ProfileRetrieveAPIView(APIView):
     """
     def get(self, request, *args, **kwargs):
         user = User.objects.get(slug=self.kwargs['slug'])
-        queryset = Profile.objects.filter(author_id=user.id)
-        serializer = ProfileSerializer(queryset, many=True)
-        return Response(serializer.data[0])
+        profile = get_object_or_404(Profile, author_id=user.id)
+        Profile_serializer = ProfileSerializer(profile)
+        return Response(Profile_serializer.data)
