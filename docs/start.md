@@ -1,8 +1,8 @@
-## 프로젝트 생성
+# 프로젝트 생성
 
 ## 1. Poetry 설정
 
-```
+```markdown
 1. pip install poetry => poetry 설치
 
 2. poetry install 
@@ -17,7 +17,8 @@
     - 자동으로 의존성 파일에 해당 목록이 업데이트 된다.
     - `--dev` 옵션을 통해 개발 환경에만 사용할 옵션을 설정할 수 있다.
     - ex) poetry add flake8 --dev
-    
+
+
 5. poetry remove <package 명>
     - 패키지들을 삭제한다
     - 자동으로 의존성 파일에서 해당 목록이 삭제된다.
@@ -28,7 +29,7 @@
 
 ## 2. 프로젝트 구조 설정
 
-```
+```markdown
 1. django-admin startproject config .
     - root 위치에서 설정
     - 프로젝트의 config 설정 폴더
@@ -36,12 +37,11 @@
 2. django-admin startapp <app파일명>
     - root/apps 위치에서 설정
     - 페이지 api 기능 설정 폴더
-
 ```
 
 ## 3. Django migrations Workflow
 
-```
+```markdown
 1. 등록할 ORM의 name을 설정
     => ex) "apps.user"
 
@@ -55,4 +55,19 @@
 
 3. python manage.py migrate
     - ORM 모델 migrations
+```
+
+## 4. 프로젝트에 필요한 기본 데이터 삽입
+
+```markdown
+
+1. json 데이터를 사용할 앱의 fixtures 폴더에 삽입
+
+2. 해당 모델 앱을 migrate
+$ python manage.py migrate
+
+3. json 데이터를 테이블에 삽입
+$ python manage.py loaddata apps/skill/fixtures/output.json
+$ python manage.py loaddata apps/job/fixtures/job.json
+
 ```

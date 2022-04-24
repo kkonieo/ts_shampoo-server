@@ -1,13 +1,4 @@
 ---
-name: feature_request
-about: Describe this issue template's purpose here.
-title: ''
-labels: ''
-assignees: ''
-
----
-
----
 name: Feature request
 about: Suggest an idea for this project
 title: "[feature] "
